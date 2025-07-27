@@ -110,7 +110,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
                   display: 'block',
                   width: '100%'
                 }}
-                data-testid={item.text.toLowerCase().replace(' ', '-') + '-sidebar-button'}
+                data-testid={item.text.toLowerCase().replace(' ', '-') + '-button'}
               >
                 <Button
                   fullWidth
@@ -141,7 +141,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
                   display: 'block',
                   width: '100%'
                 }}
-                data-testid={item.text.toLowerCase().replace(' ', '-') + '-sidebar-button'}
+                data-testid={item.text.toLowerCase().replace(' ', '-') + '-button'}
               >
                 <ListItemButton
                   selected={location.pathname === item.path}
@@ -191,58 +191,10 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
   );
 
   return (
-    <>
-      {/* Test navigation - always visible for tests */}
-      <div style={{
-        position: 'fixed',
-        top: '5px',
-        right: '5px',
-        zIndex: 10000,
-        display: 'flex',
-        gap: '5px'
-      }}>
-        <a
-          href="/"
-          data-testid="new-chat-button"
-          style={{
-            padding: '4px 8px',
-            background: '#9c88ff',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: '3px',
-            fontSize: '10px'
-          }}
-          onClick={(e) => {
-            e.preventDefault();
-            if (onNewChat) onNewChat();
-          }}
-        >
-          New
-        </a>
-        <a
-          href="/history"
-          data-testid="past-conversations-button"
-          style={{
-            padding: '4px 8px',
-            background: '#6c5ce7',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: '3px',
-            fontSize: '10px'
-          }}
-          onClick={(e) => {
-            e.preventDefault();
-            navigate('/history');
-          }}
-        >
-          History
-        </a>
-      </div>
-
-      <Box
-        component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-      >
+    <Box
+      component="nav"
+      sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
+    >
       <Drawer
         variant="temporary"
         open={mobileOpen}
@@ -276,7 +228,6 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
         {drawerContent}
       </Drawer>
     </Box>
-    </>
   );
 };
 
