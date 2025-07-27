@@ -62,7 +62,6 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
   const drawerContent = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box
-        component="header"
         sx={{
           p: 2,
           display: 'flex',
@@ -207,7 +206,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
           keepMounted: true,
         }}
         sx={{
-          display: { xs: 'block', md: 'none' },
+          display: { xs: 'block', sm: 'none' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: drawerWidth,
@@ -220,7 +219,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
       <Drawer
         variant="permanent"
         sx={{
-          display: { xs: 'none', md: 'block' },
+          display: 'block',
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: drawerWidth,

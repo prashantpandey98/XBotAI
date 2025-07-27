@@ -120,9 +120,9 @@ const ConversationHistory = () => {
                     </Box>
                   )}
                 </Box>
-                <Typography variant="body2" component="p" sx={{ color: '#333', mb: 1 }}>
+                <p style={{ color: '#333', marginBottom: '8px', fontSize: '14px', lineHeight: '1.5' }}>
                   {message.content}
-                </Typography>
+                </p>
 
                 {message.sender === 'ai' &&
                  index === messages.length - 1 &&

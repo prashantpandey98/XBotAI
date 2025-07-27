@@ -181,7 +181,7 @@ const ChatInterface = () => {
     <Box sx={{ display: 'flex', height: '100vh' }}>
       {isMobile && (
         <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
-          <Toolbar component="header">
+          <Toolbar>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -199,7 +199,7 @@ const ChatInterface = () => {
       )}
 
       {!isMobile && (
-        <header style={{ display: 'none' }}>
+        <header id="main-header" style={{ display: 'block', padding: '10px', background: '#f5f5f5' }}>
           <h1>Bot AI</h1>
         </header>
       )}

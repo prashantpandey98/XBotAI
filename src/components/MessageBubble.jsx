@@ -110,9 +110,9 @@ const MessageBubble = ({ message }) => {
             </Typography>
           )}
           
-          <Typography variant="body1" component="p" data-testid="message-content">
+          <p data-testid="message-content" style={{ margin: 0, fontSize: '16px', lineHeight: '1.5' }}>
             {message.content}
-          </Typography>
+          </p>
 
           {isAI && (
             <Fade in={showFeedback || message.feedback}>
