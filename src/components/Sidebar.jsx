@@ -18,6 +18,7 @@ import {
   Analytics as AnalyticsIcon,
   Add as AddIcon,
   Edit as EditIcon,
+  Edit,
 } from '@mui/icons-material';
 
 const drawerWidth = 280;
@@ -29,12 +30,6 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const menuItems = [
-    {
-      text: 'New Chat',
-      icon: <AddIcon />,
-      action: onNewChat,
-      isButton: true,
-    },
     {
       text: 'Past Conversations',
       icon: <HistoryIcon />,
@@ -64,6 +59,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
       <Box
         sx={{
           p: 2,
+          pt: isMobile ? 10 : 2,
           display: 'flex',
           alignItems: 'center',
           gap: 1,
@@ -95,6 +91,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
         <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#9c88ff' }} data-testid="app-header">
           Bot AI
         </Typography>
+        <Edit onClick={onNewChat} sx={{ ml: 'auto', cursor: 'pointer' }}/>
       </Box>
 
       <List sx={{ flexGrow: 1, pt: 2 }}>

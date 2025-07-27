@@ -109,18 +109,7 @@ const ChatInterface = () => {
         px: 2,
       }}
     >
-      <Box
-        sx={{
-          width: 80,
-          height: 80,
-          borderRadius: '50%',
-          background: 'linear-gradient(45deg, #9c88ff, #6c5ce7)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          m: 3,
-        }}
-      >
+
        <Box
   component="img"
   src={AiImage}
@@ -129,10 +118,10 @@ const ChatInterface = () => {
     width: 80,
     height: 80,
     borderRadius: '50%',
+    mt:8
   }}
 />
 
-      </Box>
       
       <Typography variant="h4" sx={{ mb: 4, fontWeight: 'bold', color: '#333' }}>
         How Can I Help You Today?
@@ -204,55 +193,6 @@ const ChatInterface = () => {
         </header>
       )}
 
-      {/* Test navigation buttons - only visible during tests */}
-      <div style={{
-        position: 'fixed',
-        top: '10px',
-        right: '10px',
-        zIndex: 9999,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '5px'
-      }}>
-        <a
-          href="/history"
-          data-testid="past-conversations-button"
-          style={{
-            padding: '8px 12px',
-            background: '#9c88ff',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: '4px',
-            fontSize: '12px',
-            textAlign: 'center'
-          }}
-          onClick={(e) => {
-            e.preventDefault();
-            window.location.href = '/history';
-          }}
-        >
-          Past Conversations
-        </a>
-        <a
-          href="/"
-          data-testid="new-chat-button"
-          style={{
-            padding: '8px 12px',
-            background: '#6c5ce7',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: '4px',
-            fontSize: '12px',
-            textAlign: 'center'
-          }}
-          onClick={(e) => {
-            e.preventDefault();
-            handleNewChat();
-          }}
-        >
-          New Chat
-        </a>
-      </div>
 
       <Sidebar
         mobileOpen={mobileOpen}
@@ -271,11 +211,11 @@ const ChatInterface = () => {
           mt: isMobile ? 8 : 0,
         }}
       >
-        {!state.currentConversation?.messages?.length ? (
-          renderWelcomeScreen()
-        ) : (
-          renderChatMessages()
-        )}
+          {!state.currentConversation?.messages?.length ? (
+            renderWelcomeScreen()
+          ) : (
+            renderChatMessages()
+          )}
 
         <Box
           elevation={1}
@@ -303,7 +243,8 @@ const ChatInterface = () => {
                 outline: 'none',
                 backgroundColor: '#fff',
                 minHeight: '56px',
-                boxSizing: 'border-box'
+                boxSizing: 'border-box',
+                marginTop:'20px'
               }}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -342,7 +283,7 @@ const ChatInterface = () => {
             >
               Save
             </Button>
-          </Box>
+        </Box>
         </Box>
       </Box>
 
