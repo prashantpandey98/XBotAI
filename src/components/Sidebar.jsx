@@ -206,7 +206,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
           keepMounted: true,
         }}
         sx={{
-          display: { xs: 'block', sm: 'none' },
+          display: { xs: 'block', md: 'none' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: drawerWidth,
@@ -219,7 +219,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
       <Drawer
         variant="permanent"
         sx={{
-          display: 'block',
+          display: { xs: 'none', md: 'block' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: drawerWidth,

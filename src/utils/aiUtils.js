@@ -6,38 +6,17 @@ export const generateAIResponse = (question) => {
   }
 
   const normalizedQuestion = question.toLowerCase().trim();
-  
-  // Find exact match first
-  const exactMatch = sampleData.find(item => 
+
+  // Only find exact matches to ensure proper default message behavior
+  const exactMatch = sampleData.find(item =>
     item.question.toLowerCase() === normalizedQuestion
   );
-  
+
   if (exactMatch) {
     return exactMatch.response;
   }
 
-  // Find partial match
-  const partialMatch = sampleData.find(item => {
-    const itemQuestion = item.question.toLowerCase();
-    return itemQuestion.includes(normalizedQuestion) || 
-           normalizedQuestion.includes(itemQuestion);
-  });
-
-  if (partialMatch) {
-    return partialMatch.response;
-  }
-
-  // Find match by keywords
-  const keywords = normalizedQuestion.split(' ').filter(word => word.length > 2);
-  const keywordMatch = sampleData.find(item => {
-    const itemQuestion = item.question.toLowerCase();
-    return keywords.some(keyword => itemQuestion.includes(keyword));
-  });
-
-  if (keywordMatch) {
-    return keywordMatch.response;
-  }
-
+  // Return default message for any question not in the database
   return "Sorry, Did not understand your query!";
 };
 
@@ -70,7 +49,7 @@ export const getSuggestedQuestions = () => {
 
 export const createMessage = (content, sender, senderName = null) => {
   return {
-    id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+    id: Date.now().toString() + Math.random().toString(36).substring(2, 11),
     content,
     sender,
     senderName: senderName || (sender === 'user' ? 'You' : 'Soul AI'),

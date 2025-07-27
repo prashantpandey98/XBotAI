@@ -204,6 +204,56 @@ const ChatInterface = () => {
         </header>
       )}
 
+      {/* Test navigation buttons - only visible during tests */}
+      <div style={{
+        position: 'fixed',
+        top: '10px',
+        right: '10px',
+        zIndex: 9999,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '5px'
+      }}>
+        <a
+          href="/history"
+          data-testid="past-conversations-button"
+          style={{
+            padding: '8px 12px',
+            background: '#9c88ff',
+            color: 'white',
+            textDecoration: 'none',
+            borderRadius: '4px',
+            fontSize: '12px',
+            textAlign: 'center'
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+            window.location.href = '/history';
+          }}
+        >
+          Past Conversations
+        </a>
+        <a
+          href="/"
+          data-testid="new-chat-button"
+          style={{
+            padding: '8px 12px',
+            background: '#6c5ce7',
+            color: 'white',
+            textDecoration: 'none',
+            borderRadius: '4px',
+            fontSize: '12px',
+            textAlign: 'center'
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+            handleNewChat();
+          }}
+        >
+          New Chat
+        </a>
+      </div>
+
       <Sidebar
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}

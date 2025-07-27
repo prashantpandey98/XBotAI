@@ -183,7 +183,7 @@ const ConversationHistory = () => {
       >
         <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
           <Container maxWidth="md" sx={{ py: 3 }}>
-            <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center' }} data-testid="past-conversations-header">
+            <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center' }}>
               Conversation History
             </Typography>
 
