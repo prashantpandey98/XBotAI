@@ -92,7 +92,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
             }}
           />
         </Box>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#9c88ff' }}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#9c88ff' }} data-testid="app-header">
           Bot AI
         </Typography>
       </Box>
@@ -106,6 +106,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
                 variant="contained"
                 startIcon={item.icon}
                 onClick={() => handleNavigation(item)}
+                data-testid={item.text.toLowerCase().replace(' ', '-') + '-button'}
                 sx={{
                   justifyContent: 'flex-start',
                   background: 'linear-gradient(45deg, #9c88ff, #6c5ce7)',
@@ -121,6 +122,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
               <ListItemButton
                 onClick={() => handleNavigation(item)}
                 selected={location.pathname === item.path}
+                data-testid={item.text.toLowerCase().replace(' ', '-') + '-button'}
                 sx={{
                   borderRadius: 2,
                   '&.Mui-selected': {

@@ -169,7 +169,7 @@ const ChatInterface = () => {
   );
 
   const renderChatMessages = () => (
-    <Box sx={{ flexGrow: 1, overflow: 'auto', p: 2 }}>
+    <Box sx={{ flexGrow: 1, overflow: 'auto', p: 2 }} data-testid="chat-messages">
       {state.currentConversation?.messages?.map((msg) => (
         <MessageBubble key={msg.id} message={msg} />
       ))}
@@ -192,7 +192,7 @@ const ChatInterface = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap component="div">
+            <Typography variant="h6" noWrap component="div" data-testid="app-header">
               Bot AI
             </Typography>
           </Toolbar>
@@ -229,30 +229,38 @@ const ChatInterface = () => {
             borderRadius: 0,
           }}
         >
-          <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-end' }}>
+          <Box
+            component="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSendMessage();
+            }}
+            sx={{ display: 'flex', gap: 1, alignItems: 'flex-end' }}
+          >
             <TextField
               fullWidth
               multiline
               maxRows={4}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
+              onKeyDown={handleKeyPress}
               placeholder="Message Bot AI…"
               variant="outlined"
               disabled={isAITyping}
+              data-testid="message-input"
               sx={{
                 '& .MuiOutlinedInput-root': {
                   borderRadius: 3,
                   background:'#fff'
                 },
-                
+
               }}
             />
             <Button
               type="submit"
               variant="contained"
-              onClick={() => handleSendMessage()}
               disabled={!message.trim() || isAITyping}
+              data-testid="ask-button"
               sx={{
                 minWidth: 60,
                 height: 56,

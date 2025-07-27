@@ -65,6 +65,7 @@ const MessageBubble = ({ message }) => {
         alignItems: 'flex-start',
         gap: 1,
       }}
+      data-testid={`message-${message.sender}`}
     >
       {isAI && getAIAvatar()}
 
@@ -109,7 +110,7 @@ const MessageBubble = ({ message }) => {
             </Typography>
           )}
           
-          <Typography variant="body1" component="p">
+          <Typography variant="body1" component="p" data-testid="message-content">
             {message.content}
           </Typography>
 

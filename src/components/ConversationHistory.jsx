@@ -92,7 +92,7 @@ const ConversationHistory = () => {
               <Box sx={{ flexGrow: 1 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
                   <Typography variant="body2" sx={{ fontWeight: 'bold', color: '#333' }}>
-                    {message.sender === 'user' ? 'You' : 'Soul AI'}
+                    {message.sender === 'user' ? 'You' : <span>Soul AI</span>}
                   </Typography>
                   <Typography variant="caption" sx={{ color: '#555' }}>
                     {formatTime(message.timestamp)}
@@ -120,7 +120,7 @@ const ConversationHistory = () => {
                     </Box>
                   )}
                 </Box>
-                <Typography variant="body2" sx={{ color: '#333', mb: 1 }}>
+                <Typography variant="body2" component="p" sx={{ color: '#333', mb: 1 }}>
                   {message.content}
                 </Typography>
 
@@ -183,7 +183,7 @@ const ConversationHistory = () => {
       >
         <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
           <Container maxWidth="md" sx={{ py: 3 }}>
-            <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center' }}>
+            <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center' }} data-testid="past-conversations-header">
               Conversation History
             </Typography>
 
