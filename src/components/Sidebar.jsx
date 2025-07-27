@@ -62,6 +62,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
   const drawerContent = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box
+        component="header"
         sx={{
           p: 2,
           display: 'flex',
@@ -101,41 +102,66 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
         {menuItems.map((item) => (
           <ListItem key={item.text} disablePadding sx={{ px: 2, mb: 1 }}>
             {item.isButton ? (
-              <Button
-                fullWidth
-                variant="contained"
-                startIcon={item.icon}
-                onClick={() => handleNavigation(item)}
-                data-testid={item.text.toLowerCase().replace(' ', '-') + '-button'}
-                sx={{
-                  justifyContent: 'flex-start',
-                  background: 'linear-gradient(45deg, #9c88ff, #6c5ce7)',
-                  borderRadius: 2,
-                  py: 1.5,
-                  textTransform: 'none',
-                  fontSize: '1rem',
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigation(item);
                 }}
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  display: 'block',
+                  width: '100%'
+                }}
+                data-testid={item.text.toLowerCase().replace(' ', '-') + '-button'}
               >
-                {item.text}
-              </Button>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  startIcon={item.icon}
+                  sx={{
+                    justifyContent: 'flex-start',
+                    background: 'linear-gradient(45deg, #9c88ff, #6c5ce7)',
+                    borderRadius: 2,
+                    py: 1.5,
+                    textTransform: 'none',
+                    fontSize: '1rem',
+                  }}
+                >
+                  {item.text}
+                </Button>
+              </a>
             ) : (
-              <ListItemButton
-                onClick={() => handleNavigation(item)}
-                selected={location.pathname === item.path}
-                data-testid={item.text.toLowerCase().replace(' ', '-') + '-button'}
-                sx={{
-                  borderRadius: 2,
-                  '&.Mui-selected': {
-                    backgroundColor: 'rgba(156, 136, 255, 0.1)',
-                    '&:hover': {
-                      backgroundColor: 'rgba(156, 136, 255, 0.15)',
-                    },
-                  },
-                  '&:hover': {
-                    backgroundColor: 'rgba(156, 136, 255, 0.05)',
-                  },
+              <a
+                href={item.path}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigation(item);
                 }}
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  display: 'block',
+                  width: '100%'
+                }}
+                data-testid={item.text.toLowerCase().replace(' ', '-') + '-button'}
               >
+                <ListItemButton
+                  selected={location.pathname === item.path}
+                  sx={{
+                    borderRadius: 2,
+                    '&.Mui-selected': {
+                      backgroundColor: 'rgba(156, 136, 255, 0.1)',
+                      '&:hover': {
+                        backgroundColor: 'rgba(156, 136, 255, 0.15)',
+                      },
+                    },
+                    '&:hover': {
+                      backgroundColor: 'rgba(156, 136, 255, 0.05)',
+                    },
+                  }}
+                >
                 <ListItemIcon
                   sx={{
                     color: location.pathname === item.path ? '#9c88ff' : 'inherit',
@@ -154,6 +180,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
                   }}
                 />
               </ListItemButton>
+              </a>
             )}
           </ListItem>
         ))}

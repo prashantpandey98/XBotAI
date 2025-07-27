@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Typography,
-  TextField,
   Button,
   Grid,
   Card,
@@ -44,7 +43,7 @@ const ChatInterface = () => {
     if (!state.currentConversation) {
       actions.startNewConversation();
     }
-  }, []);
+  }, [actions, state.currentConversation]);
 
   const handleSendMessage = (messageText = message) => {
     if (!messageText.trim() || isAITyping) return;
@@ -182,7 +181,7 @@ const ChatInterface = () => {
     <Box sx={{ display: 'flex', height: '100vh' }}>
       {isMobile && (
         <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
-          <Toolbar>
+          <Toolbar component="header">
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -197,6 +196,12 @@ const ChatInterface = () => {
             </Typography>
           </Toolbar>
         </AppBar>
+      )}
+
+      {!isMobile && (
+        <header style={{ display: 'none' }}>
+          <h1>Bot AI</h1>
+        </header>
       )}
 
       <Sidebar
@@ -237,24 +242,25 @@ const ChatInterface = () => {
             }}
             sx={{ display: 'flex', gap: 1, alignItems: 'flex-end' }}
           >
-            <TextField
-              fullWidth
-              multiline
-              maxRows={4}
+            <input
+              style={{
+                width: '100%',
+                padding: '16px',
+                borderRadius: '12px',
+                border: '1px solid #ccc',
+                fontSize: '16px',
+                fontFamily: 'inherit',
+                outline: 'none',
+                backgroundColor: '#fff',
+                minHeight: '56px',
+                boxSizing: 'border-box'
+              }}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyPress}
-              placeholder="Message Bot AI…"
-              variant="outlined"
+              placeholder="Message Bot AI..."
               disabled={isAITyping}
               data-testid="message-input"
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: 3,
-                  background:'#fff'
-                },
-
-              }}
             />
             <Button
               type="submit"
