@@ -91,7 +91,9 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
         <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#9c88ff' }} data-testid="app-header">
           Bot AI
         </Typography>
-        <Edit onClick={onNewChat} sx={{ ml: 'auto', cursor: 'pointer' }}/>
+        <a href='/' style={{ textDecoration: 'none', marginLeft: 'auto',cursor: 'pointer' }}  >
+        <Edit/>
+        </a>
       </Box>
 
       <List sx={{ flexGrow: 1, pt: 2 }}>
@@ -191,10 +193,11 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
   );
 
   return (
-    <Box
-      component="nav"
-      sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-    >
+    <>
+      <Box
+        component="nav"
+        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
+      >
       <Drawer
         variant="temporary"
         open={mobileOpen}
@@ -228,6 +231,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
         {drawerContent}
       </Drawer>
     </Box>
+    </>
   );
 };
 

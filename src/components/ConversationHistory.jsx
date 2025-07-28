@@ -247,14 +247,15 @@ const ConversationHistory = () => {
             />
             <Button
               variant="contained"
-              onClick={() => navigate('/')}
               sx={{
                 minWidth: 80,
                 borderRadius: 3,
                 background: 'linear-gradient(45deg, #9c88ff, #6c5ce7)',
               }}
             >
+              <a href='/' style={{ textDecoration: 'none', color: 'inherit' }} >
               New
+              </a>
             </Button>
           </Box>
         </Box>
