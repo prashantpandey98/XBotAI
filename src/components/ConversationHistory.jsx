@@ -38,13 +38,13 @@ const ConversationHistory = () => {
   };
 
   const filteredConversations = state.conversations.filter(conv => {
-    if (!conv.messages?.length || conv.isActive) return false;
+    if (!conv.messages?.length) return false;
 
     if (!searchQuery.trim()) return true;
 
     const query = searchQuery.toLowerCase();
     return conv.messages.some(msg =>
-      msg.content.toLowerCase().includes(query)
+      msg.content && msg.content.toLowerCase().includes(query)
     ) || (conv.feedback && conv.feedback.toLowerCase().includes(query));
   });
 

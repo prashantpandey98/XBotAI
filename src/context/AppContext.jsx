@@ -35,7 +35,7 @@ const appReducer = (state, action) => {
     case actionTypes.SET_ERROR:
       return { ...state, error: action.payload };
     
-    case actionTypes.START_NEW_CONVERSATION:
+    case actionTypes.START_NEW_CONVERSATION: {
       const newConversation = {
         id: Date.now().toString(),
         messages: [],
@@ -44,62 +44,81 @@ const appReducer = (state, action) => {
         feedback: null,
         isActive: true,
       };
-      return { 
-        ...state, 
+      return {
+        ...state,
         currentConversation: newConversation,
-        conversations: [newConversation, ...state.conversations]
+        conversations: state.conversations
       };
-    
-    case actionTypes.ADD_MESSAGE:
-      if (!state.currentConversation) return state;
-      
+    }
+
+    case actionTypes.ADD_MESSAGE: {
+      if (!state.currentConversation) {
+        return state;
+      }
+
       const updatedConversation = {
         ...state.currentConversation,
-        messages: [...state.currentConversation.messages, action.payload]
+        messages: [...state.currentConversation.messages, action.payload],
+        isActive: true,
+        lastUpdated: new Date().toISOString()
       };
-      
+
+      const existingConvIndex = state.conversations.findIndex(conv => conv.id === updatedConversation.id);
+
+      let newConversations;
+      if (existingConvIndex >= 0) {
+        newConversations = state.conversations.map(conv =>
+          conv.id === updatedConversation.id ? updatedConversation : conv
+        );
+      } else {
+        newConversations = [updatedConversation, ...state.conversations];
+      }
+
       return {
         ...state,
         currentConversation: updatedConversation,
-        conversations: state.conversations.map(conv => 
-          conv.id === updatedConversation.id ? updatedConversation : conv
-        )
+        conversations: newConversations
       };
+    }
     
-    case actionTypes.ADD_FEEDBACK:
+    case actionTypes.ADD_FEEDBACK: {
       if (!state.currentConversation) return state;
-      
+
       const conversationWithFeedback = {
         ...state.currentConversation,
-        messages: state.currentConversation.messages.map(msg => 
-          msg.id === action.payload.messageId 
+        messages: state.currentConversation.messages.map(msg =>
+          msg.id === action.payload.messageId
             ? { ...msg, feedback: action.payload.feedback }
             : msg
         )
       };
-      
+
       return {
         ...state,
         currentConversation: conversationWithFeedback,
-        conversations: state.conversations.map(conv => 
+        conversations: state.conversations.map(conv =>
           conv.id === conversationWithFeedback.id ? conversationWithFeedback : conv
         )
       };
-    
-    case actionTypes.SAVE_CONVERSATION:
+    }
+
+    case actionTypes.SAVE_CONVERSATION: {
+      if (!state.currentConversation) return state;
+
       const savedConversation = {
         ...state.currentConversation,
         isActive: false,
         savedAt: new Date().toISOString()
       };
-      
+
       return {
         ...state,
-        currentConversation: null,
-        conversations: state.conversations.map(conv => 
+        currentConversation: savedConversation, // Keep current conversation but mark as saved
+        conversations: state.conversations.map(conv =>
           conv.id === savedConversation.id ? savedConversation : conv
         )
       };
+    }
     
     case actionTypes.LOAD_CONVERSATIONS:
       return { ...state, conversations: action.payload };
@@ -107,33 +126,35 @@ const appReducer = (state, action) => {
     case actionTypes.SET_CURRENT_CONVERSATION:
       return { ...state, currentConversation: action.payload };
     
-    case actionTypes.ADD_CONVERSATION_RATING:
+    case actionTypes.ADD_CONVERSATION_RATING: {
       const ratedConversation = {
         ...state.currentConversation,
         rating: action.payload
       };
-      
+
       return {
         ...state,
         currentConversation: ratedConversation,
-        conversations: state.conversations.map(conv => 
+        conversations: state.conversations.map(conv =>
           conv.id === ratedConversation.id ? ratedConversation : conv
         )
       };
-    
-    case actionTypes.ADD_CONVERSATION_FEEDBACK:
+    }
+
+    case actionTypes.ADD_CONVERSATION_FEEDBACK: {
       const feedbackConversation = {
         ...state.currentConversation,
         feedback: action.payload
       };
-      
+
       return {
         ...state,
         currentConversation: feedbackConversation,
-        conversations: state.conversations.map(conv => 
+        conversations: state.conversations.map(conv =>
           conv.id === feedbackConversation.id ? feedbackConversation : conv
         )
       };
+    }
     
     default:
       return state;
@@ -144,46 +165,48 @@ const appReducer = (state, action) => {
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
+  // Load conversations from localStorage on mount
   useEffect(() => {
-    const savedConversations = localStorage.getItem('xbotai_conversations');
+    const savedConversations = localStorage.getItem('conversations');
     if (savedConversations) {
       try {
         const conversations = JSON.parse(savedConversations);
-        dispatch({ type: actionTypes.LOAD_CONVERSATIONS, payload: conversations });
+        if (Array.isArray(conversations)) {
+          dispatch({ type: actionTypes.LOAD_CONVERSATIONS, payload: conversations });
+        }
       } catch (error) {
         console.error('Error loading conversations:', error);
+        localStorage.removeItem('conversations'); // Clear corrupted data
       }
     }
   }, []);
 
   useEffect(() => {
-    if (state.conversations.length > 0) {
-      localStorage.setItem('xbotai_conversations', JSON.stringify(state.conversations));
-    }
+    const conversationsToSave = state.conversations.filter(conv => conv.messages && conv.messages.length > 0);
+    localStorage.setItem('conversations', JSON.stringify(conversationsToSave));
   }, [state.conversations]);
 
-  // Action creators
   const actions = {
     setLoading: (loading) => dispatch({ type: actionTypes.SET_LOADING, payload: loading }),
     setError: (error) => dispatch({ type: actionTypes.SET_ERROR, payload: error }),
     startNewConversation: () => dispatch({ type: actionTypes.START_NEW_CONVERSATION }),
     addMessage: (message) => dispatch({ type: actionTypes.ADD_MESSAGE, payload: message }),
-    addFeedback: (messageId, feedback) => dispatch({ 
-      type: actionTypes.ADD_FEEDBACK, 
-      payload: { messageId, feedback } 
+    addFeedback: (messageId, feedback) => dispatch({
+      type: actionTypes.ADD_FEEDBACK,
+      payload: { messageId, feedback }
     }),
     saveConversation: () => dispatch({ type: actionTypes.SAVE_CONVERSATION }),
-    setCurrentConversation: (conversation) => dispatch({ 
-      type: actionTypes.SET_CURRENT_CONVERSATION, 
-      payload: conversation 
+    setCurrentConversation: (conversation) => dispatch({
+      type: actionTypes.SET_CURRENT_CONVERSATION,
+      payload: conversation
     }),
-    addConversationRating: (rating) => dispatch({ 
-      type: actionTypes.ADD_CONVERSATION_RATING, 
-      payload: rating 
+    addConversationRating: (rating) => dispatch({
+      type: actionTypes.ADD_CONVERSATION_RATING,
+      payload: rating
     }),
-    addConversationFeedback: (feedback) => dispatch({ 
-      type: actionTypes.ADD_CONVERSATION_FEEDBACK, 
-      payload: feedback 
+    addConversationFeedback: (feedback) => dispatch({
+      type: actionTypes.ADD_CONVERSATION_FEEDBACK,
+      payload: feedback
     }),
   };
 
