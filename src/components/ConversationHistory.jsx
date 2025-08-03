@@ -159,7 +159,7 @@ const PastConversations  = () => {
               <ArrowBackIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              Conversation History
+              Past Conversations
             </Typography>
           </Toolbar>
         </AppBar>
@@ -187,7 +187,7 @@ const PastConversations  = () => {
         <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
           <Container maxWidth="md" sx={{ py: 3 }}>
             <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center' }}>
-              Conversation History
+              Past Conversations
             </Typography>
 
             {Object.keys(groupedConversations).length === 0 ? (

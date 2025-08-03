@@ -153,8 +153,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
             ) : (
               <a
                 href={item.path}
-                onClick={(e) => {
-                  e.preventDefault();
+                onClick={() => {
                   handleNavigation(item);
                 }}
                 style={{

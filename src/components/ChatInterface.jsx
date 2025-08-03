@@ -82,7 +82,8 @@ const ChatInterface = () => {
 
   const handleSaveConversation = () => {
     if (state.currentConversation?.messages?.length > 0) {
-      setShowEndDialog(true);
+      actions.saveConversation();
+      actions.startNewConversation();
     }
   };
 
