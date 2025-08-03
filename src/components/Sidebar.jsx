@@ -60,26 +60,26 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
   const drawerContent = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box
+        component='button'
+        id='new-chat'
+            onClick={() => {
+            if (onNewChat) {
+              onNewChat();
+            }
+            navigate('/');
+          }}
         sx={{
           p: 2,
           pt: isMobile ? 10 : 2,
           display: 'flex',
           alignItems: 'center',
           gap: 1,
+          cursor: 'pointer',
+          border:'none',
           borderBottom: '1px solid #e0e0e0',
+          background: 'linear-gradient(45deg, #9c88ff, #6c5ce7)',
         }}
       >
-        <Box
-          sx={{
-            width: 32,
-            height: 32,
-            borderRadius: '50%',
-            background: 'linear-gradient(45deg, #9c88ff, #6c5ce7)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
           <Box
             component="img"
             src={AiImage}
@@ -90,34 +90,19 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
               borderRadius: '50%',
             }}
           />
-        </Box>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#9c88ff' }} data-testid="app-header">
-          Bot AI
+        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#000' }} data-testid="app-header">
+          New Chat
         </Typography>
         <Box
-          onClick={() => {
-            if (onNewChat) {
-              onNewChat();
-            }
-            navigate('/');
-          }}
+         
           sx={{
             marginLeft: 'auto',
-            cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 1,
             p: 0.5,
-            borderRadius: 1,
-            '&:hover': {
-              backgroundColor: 'rgba(156, 136, 255, 0.1)',
-            },
           }}
         >
-          <Typography variant="body2" sx={{ color: 'text.primary' }}>
-            New Chat
-          </Typography>
           <Edit />
         </Box>
       </Box>

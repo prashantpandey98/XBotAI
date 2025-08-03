@@ -23,6 +23,7 @@ const actionTypes = {
   LOAD_CONVERSATIONS: 'LOAD_CONVERSATIONS',
   SET_CURRENT_CONVERSATION: 'SET_CURRENT_CONVERSATION',
   CLEAR_CURRENT_CONVERSATION: 'CLEAR_CURRENT_CONVERSATION',
+  CLEAR_ALL_CONVERSATIONS: 'CLEAR_ALL_CONVERSATIONS',
   ADD_CONVERSATION_RATING: 'ADD_CONVERSATION_RATING',
   ADD_CONVERSATION_FEEDBACK: 'ADD_CONVERSATION_FEEDBACK',
 };
@@ -150,6 +151,16 @@ const appReducer = (state, action) => {
       return { ...state, currentConversation: null };
     }
 
+    case actionTypes.CLEAR_ALL_CONVERSATIONS: {
+      // Explicitly clear all conversations and localStorage
+      localStorage.removeItem('conversations');
+      return {
+        ...state,
+        conversations: [],
+        currentConversation: null
+      };
+    }
+
     case actionTypes.ADD_CONVERSATION_RATING: {
       const ratedConversation = {
         ...state.currentConversation,
@@ -192,23 +203,36 @@ export const AppProvider = ({ children }) => {
   // Load conversations from localStorage on mount
   useEffect(() => {
     const savedConversations = localStorage.getItem('conversations');
+    console.log('Loading conversations from localStorage:', savedConversations);
     if (savedConversations) {
       try {
         const conversations = JSON.parse(savedConversations);
         if (Array.isArray(conversations)) {
+          console.log('Successfully loaded conversations:', conversations.length);
           dispatch({ type: actionTypes.LOAD_CONVERSATIONS, payload: conversations });
         }
       } catch (error) {
         console.error('Error loading conversations:', error);
-        localStorage.removeItem('conversations'); // Clear corrupted data
+        // Only remove localStorage if it's truly corrupted JSON, not just empty or malformed
+        const savedData = localStorage.getItem('conversations');
+        if (savedData && savedData.trim() !== '' && savedData !== '[]') {
+          console.warn('Corrupted conversation data detected, clearing localStorage');
+          localStorage.removeItem('conversations');
+        }
       }
     }
   }, []);
 
   useEffect(() => {
     const conversationsToSave = state.conversations.filter(conv => conv.messages && conv.messages.length > 0);
- if (conversationsToSave.length > 0 || state.conversations.length === 0) {
+    console.log('Saving conversations to localStorage:', conversationsToSave.length, 'conversations');
+    // Only save to localStorage if we have conversations to save
+    // Don't overwrite existing data with empty arrays during initialization
+    if (conversationsToSave.length > 0) {
       localStorage.setItem('conversations', JSON.stringify(conversationsToSave));
+      console.log('Successfully saved conversations to localStorage');
+    } else {
+      console.log('No conversations to save, keeping existing localStorage data');
     }
   }, [state.conversations]);
 
@@ -227,6 +251,7 @@ export const AppProvider = ({ children }) => {
       payload: conversation
     }),
     clearCurrentConversation: () => dispatch({ type: actionTypes.CLEAR_CURRENT_CONVERSATION }),
+    clearAllConversations: () => dispatch({ type: actionTypes.CLEAR_ALL_CONVERSATIONS }),
     addConversationRating: (rating) => dispatch({
       type: actionTypes.ADD_CONVERSATION_RATING,
       payload: rating
