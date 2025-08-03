@@ -64,7 +64,7 @@ const ChatInterface = () => {
       } finally {
         setIsAITyping(false);
       }
-    }, 500); // Reduced delay for better test compatibility
+    }, 100);
 
     setMessage('');
   };
@@ -82,11 +82,8 @@ const ChatInterface = () => {
 
   const handleSaveConversation = () => {
     if (state.currentConversation?.messages?.length > 0) {
-      console.log('Saving conversation with', state.currentConversation.messages.length, 'messages');
       actions.saveConversation();
       actions.startNewConversation();
-    } else {
-      console.log('No conversation to save or no messages');
     }
   };
 

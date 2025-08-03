@@ -105,7 +105,7 @@ const appReducer = (state, action) => {
     }
 
     case actionTypes.SAVE_CONVERSATION: {
-      if (!state.currentConversation) return state;
+      if (!state.currentConversation || !state.currentConversation.messages?.length) return state;
 
       const savedConversation = {
         ...state.currentConversation,
@@ -113,21 +113,10 @@ const appReducer = (state, action) => {
         savedAt: new Date().toISOString()
       };
 
-      const existingIndex = state.conversations.findIndex(conv => conv.id === savedConversation.id);
-
-      let updatedConversations;
-      if (existingIndex >= 0) {
-        updatedConversations = state.conversations.map(conv =>
-          conv.id === savedConversation.id ? savedConversation : conv
-        );
-      } else {
-        updatedConversations = [...state.conversations, savedConversation];
-      }
-
       return {
         ...state,
-        currentConversation: savedConversation,
-        conversations: updatedConversations
+        currentConversation: null,
+        conversations: [...state.conversations, savedConversation]
       };
     }
     
