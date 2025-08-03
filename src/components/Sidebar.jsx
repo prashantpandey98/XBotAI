@@ -90,21 +90,30 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
               borderRadius: '50%',
             }}
           />
-        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#000' }} data-testid="app-header">
-          New Chat
-        </Typography>
-        <Box
-         
-          sx={{
+        <a
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            if (onNewChat) {
+              onNewChat();
+            }
+            navigate('/');
+          }}
+          style={{
+            textDecoration: 'none',
+            color: 'inherit',
             marginLeft: 'auto',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            p: 0.5,
+            padding: '4px',
+            borderRadius: '4px',
+            cursor: 'pointer',
           }}
         >
+          New Chat
           <Edit />
-        </Box>
+        </a>
       </Box>
 
       <List sx={{ flexGrow: 1, pt: 2 }}>

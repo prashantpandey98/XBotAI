@@ -120,9 +120,9 @@ const PastConversations  = () => {
                     </Box>
                   )}
                 </Box>
-                <p style={{ color: '#333', marginBottom: '8px', fontSize: '14px', lineHeight: '1.5' }}>
+                <div style={{ color: '#333', marginBottom: '8px', fontSize: '14px', lineHeight: '1.5' }}>
                   {message.content}
-                </p>
+                </div>
 
                 {message.sender === 'ai' &&
                  index === messages.length - 1 &&

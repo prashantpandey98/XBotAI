@@ -203,12 +203,10 @@ export const AppProvider = ({ children }) => {
   // Load conversations from localStorage on mount
   useEffect(() => {
     const savedConversations = localStorage.getItem('conversations');
-    console.log('Loading conversations from localStorage:', savedConversations);
     if (savedConversations) {
       try {
         const conversations = JSON.parse(savedConversations);
         if (Array.isArray(conversations)) {
-          console.log('Successfully loaded conversations:', conversations.length);
           dispatch({ type: actionTypes.LOAD_CONVERSATIONS, payload: conversations });
         }
       } catch (error) {
@@ -225,14 +223,10 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     const conversationsToSave = state.conversations.filter(conv => conv.messages && conv.messages.length > 0);
-    console.log('Saving conversations to localStorage:', conversationsToSave.length, 'conversations');
     // Only save to localStorage if we have conversations to save
     // Don't overwrite existing data with empty arrays during initialization
     if (conversationsToSave.length > 0) {
       localStorage.setItem('conversations', JSON.stringify(conversationsToSave));
-      console.log('Successfully saved conversations to localStorage');
-    } else {
-      console.log('No conversations to save, keeping existing localStorage data');
     }
   }, [state.conversations]);
 
