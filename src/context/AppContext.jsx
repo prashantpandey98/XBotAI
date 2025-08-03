@@ -105,13 +105,20 @@ const appReducer = (state, action) => {
     }
 
     case actionTypes.SAVE_CONVERSATION: {
-      if (!state.currentConversation || !state.currentConversation.messages?.length) return state;
+      if (!state.currentConversation || !state.currentConversation.messages?.length) {
+        console.log('No conversation to save or no messages');
+        return state;
+      }
+
+      console.log('Saving conversation with', state.currentConversation.messages.length, 'messages');
 
       const savedConversation = {
         ...state.currentConversation,
         isActive: false,
         savedAt: new Date().toISOString()
       };
+
+      console.log('Total conversations after save:', state.conversations.length + 1);
 
       return {
         ...state,
