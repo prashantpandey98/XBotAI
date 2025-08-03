@@ -111,7 +111,9 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
             cursor: 'pointer',
           }}
         >
-          New Chat
+          <Typography variant="h6" noWrap component="div" mr={4}>
+            New Chat
+            </Typography>
           <Edit />
         </a>
       </Box>
@@ -153,8 +155,13 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
             ) : (
               <a
                 href={item.path}
-                onClick={() => {
-                  handleNavigation(item);
+                onClick={(e) => {
+                  e.preventDefault();
+                  actions.clearCurrentConversation();
+                  navigate(item.path);
+                  if (isMobile) {
+                    handleDrawerToggle();
+                  }
                 }}
                 style={{
                   textDecoration: 'none',

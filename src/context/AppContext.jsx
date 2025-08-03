@@ -113,12 +113,21 @@ const appReducer = (state, action) => {
         savedAt: new Date().toISOString()
       };
 
+      const existingIndex = state.conversations.findIndex(conv => conv.id === savedConversation.id);
+
+      let updatedConversations;
+      if (existingIndex >= 0) {
+        updatedConversations = state.conversations.map(conv =>
+          conv.id === savedConversation.id ? savedConversation : conv
+        );
+      } else {
+        updatedConversations = [...state.conversations, savedConversation];
+      }
+
       return {
         ...state,
-        currentConversation: savedConversation, // Keep current conversation but mark as saved
-        conversations: state.conversations.map(conv =>
-          conv.id === savedConversation.id ? savedConversation : conv
-        )
+        currentConversation: savedConversation,
+        conversations: updatedConversations
       };
     }
     
