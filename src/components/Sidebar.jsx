@@ -107,6 +107,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            gap: 1,
             p: 0.5,
             borderRadius: 1,
             '&:hover': {
@@ -114,6 +115,9 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
             },
           }}
         >
+          <Typography variant="body2" sx={{ color: 'text.primary' }}>
+            New Chat
+          </Typography>
           <Edit />
         </Box>
       </Box>
