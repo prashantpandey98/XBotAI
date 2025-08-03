@@ -25,7 +25,7 @@ import { useApp } from '../context/AppContext';
 import { groupConversationsByDate, formatTime } from '../utils/aiUtils';
 import Sidebar from './Sidebar';
 
-const ConversationHistory = () => {
+const PastConversations  = () => {
   const { state, actions } = useApp();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -272,4 +272,4 @@ const ConversationHistory = () => {
   );
 };
 
-export default ConversationHistory;
+export default PastConversations ;
