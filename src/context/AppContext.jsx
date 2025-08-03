@@ -22,6 +22,7 @@ const actionTypes = {
   SAVE_CONVERSATION: 'SAVE_CONVERSATION',
   LOAD_CONVERSATIONS: 'LOAD_CONVERSATIONS',
   SET_CURRENT_CONVERSATION: 'SET_CURRENT_CONVERSATION',
+  CLEAR_CURRENT_CONVERSATION: 'CLEAR_CURRENT_CONVERSATION',
   ADD_CONVERSATION_RATING: 'ADD_CONVERSATION_RATING',
   ADD_CONVERSATION_FEEDBACK: 'ADD_CONVERSATION_FEEDBACK',
 };
@@ -125,7 +126,30 @@ const appReducer = (state, action) => {
     
     case actionTypes.SET_CURRENT_CONVERSATION:
       return { ...state, currentConversation: action.payload };
-    
+
+    case actionTypes.CLEAR_CURRENT_CONVERSATION: {
+      // Save current conversation if it has messages before clearing
+      if (state.currentConversation?.messages?.length > 0) {
+        const savedConversation = {
+          ...state.currentConversation,
+          isActive: false,
+          savedAt: new Date().toISOString()
+        };
+
+        const updatedConversations = state.conversations.map(conv =>
+          conv.id === savedConversation.id ? savedConversation : conv
+        );
+
+        return {
+          ...state,
+          currentConversation: null,
+          conversations: updatedConversations
+        };
+      }
+
+      return { ...state, currentConversation: null };
+    }
+
     case actionTypes.ADD_CONVERSATION_RATING: {
       const ratedConversation = {
         ...state.currentConversation,
@@ -183,7 +207,9 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     const conversationsToSave = state.conversations.filter(conv => conv.messages && conv.messages.length > 0);
-    localStorage.setItem('conversations', JSON.stringify(conversationsToSave));
+ if (conversationsToSave.length > 0 || state.conversations.length === 0) {
+      localStorage.setItem('conversations', JSON.stringify(conversationsToSave));
+    }
   }, [state.conversations]);
 
   const actions = {
@@ -200,6 +226,7 @@ export const AppProvider = ({ children }) => {
       type: actionTypes.SET_CURRENT_CONVERSATION,
       payload: conversation
     }),
+    clearCurrentConversation: () => dispatch({ type: actionTypes.CLEAR_CURRENT_CONVERSATION }),
     addConversationRating: (rating) => dispatch({
       type: actionTypes.ADD_CONVERSATION_RATING,
       payload: rating

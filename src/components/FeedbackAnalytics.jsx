@@ -36,7 +36,7 @@ import { calculateAverageRating, getFeedbackStats, formatDate } from '../utils/a
 import Sidebar from './Sidebar';
 
 const FeedbackAnalytics = () => {
-  const { state } = useApp();
+  const { state, actions } = useApp();
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -118,7 +118,10 @@ const FeedbackAnalytics = () => {
       <Sidebar
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}
-        onNewChat={() => navigate('/')}
+        onNewChat={() => {
+          actions.startNewConversation();
+          navigate('/');
+        }}
       />
 
       <Box

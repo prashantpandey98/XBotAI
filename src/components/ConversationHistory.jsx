@@ -26,7 +26,7 @@ import { groupConversationsByDate, formatTime } from '../utils/aiUtils';
 import Sidebar from './Sidebar';
 
 const ConversationHistory = () => {
-  const { state } = useApp();
+  const { state, actions } = useApp();
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -168,7 +168,10 @@ const ConversationHistory = () => {
       <Sidebar
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}
-        onNewChat={() => navigate('/')}
+        onNewChat={() => {
+          actions.startNewConversation();
+          navigate('/');
+        }}
       />
 
       <Box
@@ -201,7 +204,10 @@ const ConversationHistory = () => {
                 {!searchQuery && (
                   <Button
                     variant="contained"
-                    onClick={() => navigate('/')}
+                    onClick={() => {
+                      actions.startNewConversation();
+                      navigate('/');
+                    }}
                     sx={{
                       background: 'linear-gradient(45deg, #9c88ff, #6c5ce7)',
                       borderRadius: 2,
@@ -247,15 +253,17 @@ const ConversationHistory = () => {
             />
             <Button
               variant="contained"
+              onClick={() => {
+                actions.startNewConversation();
+                navigate('/');
+              }}
               sx={{
                 minWidth: 80,
                 borderRadius: 3,
                 background: 'linear-gradient(45deg, #9c88ff, #6c5ce7)',
               }}
             >
-              <a href='/' style={{ textDecoration: 'none', color: 'inherit' }} >
               New
-              </a>
             </Button>
           </Box>
         </Box>

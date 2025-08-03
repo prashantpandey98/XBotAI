@@ -1,5 +1,6 @@
 import AiImage from '../assets/AiImage.png';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useApp } from '../context/AppContext';
 import {
   Box,
   Drawer,
@@ -28,6 +29,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { actions } = useApp();
 
   const menuItems = [
     {
@@ -46,6 +48,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
     if (item.isButton && item.action) {
       item.action();
     } else if (item.path) {
+      actions.clearCurrentConversation();
       navigate(item.path);
     }
 
@@ -91,9 +94,28 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
         <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#9c88ff' }} data-testid="app-header">
           Bot AI
         </Typography>
-        <a href='/' style={{ textDecoration: 'none', marginLeft: 'auto',cursor: 'pointer' }}  >
-        <Edit/>
-        </a>
+        <Box
+          onClick={() => {
+            if (onNewChat) {
+              onNewChat();
+            }
+            navigate('/');
+          }}
+          sx={{
+            marginLeft: 'auto',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            p: 0.5,
+            borderRadius: 1,
+            '&:hover': {
+              backgroundColor: 'rgba(156, 136, 255, 0.1)',
+            },
+          }}
+        >
+          <Edit />
+        </Box>
       </Box>
 
       <List sx={{ flexGrow: 1, pt: 2 }}>
