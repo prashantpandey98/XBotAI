@@ -51,8 +51,6 @@ const ChatInterface = () => {
     const userMessage = createMessage(messageText, 'user');
     actions.addMessage(userMessage);
     setIsAITyping(true);
-
-    setTimeout(() => {
       try {
         const aiResponse = generateAIResponse(messageText);
         const aiMessage = createMessage(aiResponse, 'ai', 'Soul AI');
@@ -64,7 +62,6 @@ const ChatInterface = () => {
       } finally {
         setIsAITyping(false);
       }
-    }, 100);
 
     setMessage('');
   };
