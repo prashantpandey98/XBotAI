@@ -155,10 +155,8 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
             ) : (
               <a
                 href={item.path}
-                onClick={(e) => {
-                  e.preventDefault();
+                onClick={() => {
                   actions.clearCurrentConversation();
-                  navigate(item.path);
                   if (isMobile) {
                     handleDrawerToggle();
                   }
@@ -186,24 +184,24 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
                     },
                   }}
                 >
-                <ListItemIcon
-                  sx={{
-                    color: location.pathname === item.path ? '#9c88ff' : 'inherit',
-                    minWidth: 40,
-                  }}
-                >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  sx={{
-                    '& .MuiListItemText-primary': {
-                      fontWeight: location.pathname === item.path ? 600 : 400,
+                  <ListItemIcon
+                    sx={{
                       color: location.pathname === item.path ? '#9c88ff' : 'inherit',
-                    },
-                  }}
-                />
-              </ListItemButton>
+                      minWidth: 40,
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.text}
+                    sx={{
+                      '& .MuiListItemText-primary': {
+                        fontWeight: location.pathname === item.path ? 600 : 400,
+                        color: location.pathname === item.path ? '#9c88ff' : 'inherit',
+                      },
+                    }}
+                  />
+                </ListItemButton>
               </a>
             )}
           </ListItem>
