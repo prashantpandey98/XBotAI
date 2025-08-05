@@ -2,7 +2,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
 import ChatInterface from './components/ChatInterface';
-import PastConversations  from './components/ConversationHistory';
+import PastConversations  from './components/PastConversations';
 import FeedbackAnalytics from './components/FeedbackAnalytics';
 
 function App() {
