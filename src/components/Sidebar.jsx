@@ -35,7 +35,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
     {
       text: 'Past Conversations',
       icon: <HistoryIcon />,
-      path: '/history',
+      path: '/past-conversations',
     },
     {
       text: 'Analytics',
