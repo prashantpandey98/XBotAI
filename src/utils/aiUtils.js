@@ -5,11 +5,11 @@ export const generateAIResponse = (question) => {
     return "Sorry, Did not understand your query!";
   }
 
-  const normalizedQuestion = question.toLowerCase().trim();
+  const normalizedQuestion = question.toLowerCase().trim().replace(/[?!.]+$/, '');
 
-  // Only find exact matches to ensure proper default message behavior
+  // Find exact matches (ignoring punctuation)
   const exactMatch = sampleData.find(item =>
-    item.question.toLowerCase() === normalizedQuestion
+    item.question.toLowerCase().replace(/[?!.]+$/, '') === normalizedQuestion
   );
 
   if (exactMatch) {

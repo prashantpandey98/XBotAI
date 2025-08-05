@@ -223,11 +223,8 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     const conversationsToSave = state.conversations.filter(conv => conv.messages && conv.messages.length > 0);
-    // Only save to localStorage if we have conversations to save
-    // Don't overwrite existing data with empty arrays during initialization
-    if (conversationsToSave.length > 0) {
-      localStorage.setItem('conversations', JSON.stringify(conversationsToSave));
-    }
+    // Always save to localStorage to maintain sync
+    localStorage.setItem('conversations', JSON.stringify(conversationsToSave));
   }, [state.conversations]);
 
   const actions = {

@@ -155,8 +155,10 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
             ) : (
               <a
                 href={item.path}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   actions.clearCurrentConversation();
+                  navigate(item.path);
                   if (isMobile) {
                     handleDrawerToggle();
                   }
