@@ -10,7 +10,7 @@ function App() {
     <AppProvider>
       <Routes>
         <Route path="/" element={<ChatInterface />} />
-        <Route path="/past-conversations" element={<PastConversations />} />
+        <Route path="/history" element={<PastConversations />} />
         <Route path="/analytics" element={<FeedbackAnalytics />} />
       </Routes>
     </AppProvider>
