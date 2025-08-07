@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ChatInterface />} />
         <Route path="/history" element={<PastConversations />} />
-        <Route path="/analytics" element={<FeedbackAnalytics />} />
+        {/* <Route path="/analytics" element={<FeedbackAnalytics />} /> */}
       </Routes>
     </AppProvider>
   );

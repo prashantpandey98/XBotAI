@@ -23,7 +23,7 @@ import {
   Divider,
 } from '@mui/material';
 import {
-  ArrowBack as ArrowBackIcon,
+  Menu as MenuIcon,
   ThumbUp,
   ThumbDown,
   Star,
@@ -106,7 +106,7 @@ const FeedbackAnalytics = () => {
               onClick={handleDrawerToggle}
               sx={{ mr: 2 }}
             >
-              <ArrowBackIcon />
+              <MenuIcon /> 
             </IconButton>
             <Typography variant="h6" noWrap component="div">
               Feedback Analytics
