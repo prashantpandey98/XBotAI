@@ -32,13 +32,15 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, onNewChat }) => {
   const { actions } = useApp();
 
   const menuItems = [
-  { text: 'New Chat',
-      icon: <EditIcon />,
-      path: '/',},
     {
       text: 'Past Conversations',
       icon: <HistoryIcon />,
       path: '/history',
+    },
+    {
+      text: 'Analytics',
+      icon: <AnalyticsIcon />,
+      path: '/analytics',
     },
   ];
 
